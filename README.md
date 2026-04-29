@@ -1,12 +1,8 @@
-# 📊 Chapter Progress Bar
+# 📊 视频进度条动画 · Chapter Progress Bar
 
-**为 YouTube 视频自动生成章节进度条** —— 透明背景 overlay，基于 [Remotion](https://remotion.dev) 的 AI Agent Skill。
+**一键为 YouTube 视频生成章节进度条动画** —— 透明背景，可直接叠加在视频上，基于 [Remotion](https://remotion.dev) 的 AI Agent Skill。
 
-**Auto-generate a chapter progress bar overlay for YouTube videos** — transparent background, built on [Remotion](https://remotion.dev).
-
-给你的视频顶部加一条进度条，清晰显示当前播放到哪个章节，随着视频播放自动填充。
-
-Adds a progress bar at the top of your video showing which chapter is currently playing, filling automatically as the video plays.
+给视频顶部加一条进度条，清晰显示当前播放到哪个章节，随着视频播放自动填充。支持横屏（16:9）和竖屏（9:16）。
 
 ---
 
