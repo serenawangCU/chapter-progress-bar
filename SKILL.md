@@ -52,6 +52,11 @@ metadata:
 
 时间戳换算公式：`总秒数 = 分钟 × 60 + 秒`
 
+> [!IMPORTANT]
+> **此 skill 的最终 output 是启动预览 server（`npm run dev`），不是渲染视频。**
+> 生成代码后直接跑 server，让用户在浏览器里检查效果，由用户自己决定何时渲染。
+> 禁止主动执行任何 `remotion render` 命令。
+
 ## 第三步：准备 Remotion 项目
 
 询问用户：是否已有 overlay 项目？如有，直接 `cd` 进去；如没有，在用户指定目录新建：
