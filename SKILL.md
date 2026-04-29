@@ -231,24 +231,32 @@ export const RemotionRoot: React.FC = () => {
 };
 ```
 
-## 第五步：预览
+## 第五步：启动预览服务器
+
+写完代码后，直接运行：
 
 ```bash
 npm run dev
-# 浏览器打开 http://localhost:3000 查看效果
 ```
 
-## 第六步：渲染输出（透明背景）
+然后告诉用户：
+> 预览已启动，请打开 http://localhost:3000 查看效果。满意后告诉我，我给你渲染命令。
+
+**不要主动渲染**，等用户确认满意再提供渲染命令。
+
+## 第六步：用户确认后提供渲染命令
+
+用户确认效果 OK 后，给出对应命令让用户自己执行：
 
 ```bash
-# 输出 WebM（透明通道，推荐用于视频叠加）
+# WebM 透明背景（通用，DaVinci / Premiere）
 npx remotion render ChapterProgressBar --codec=vp8 out/progress-bar.webm
 
-# 或输出 ProRes 4444（Final Cut Pro / DaVinci 等专业软件）
+# ProRes 4444 透明背景（Final Cut Pro）
 npx remotion render ChapterProgressBar --codec=prores --prores-profile=4444 out/progress-bar.mov
 ```
 
-渲染完成后，在剪辑软件里把输出文件拖到视频轨道最上层即可。
+渲染完成后，在剪辑软件里把文件拖到视频轨道最上层即可。
 
 ## 常见调整
 
