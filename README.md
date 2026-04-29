@@ -6,6 +6,16 @@
 
 ---
 
+## 安装 · Installation
+
+复制下面这句话，发给你的 AI Agent（Claude Code、Cursor、Gemini CLI 等），它会自动安装：
+
+> **"Please install this skill: `https://github.com/serenawangCU/chapter-progress-bar`"**
+
+就这一句，Agent 会自动克隆仓库并读取 `SKILL.md`，之后就能直接使用了。
+
+---
+
 ## 效果预览 · Preview
 
 进度条横跨视频顶部，每个章节占据对应时长的宽度，已播放部分填充为暖棕色，未播放部分为浅米色。
