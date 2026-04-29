@@ -45,6 +45,7 @@ metadata:
 ---
 
 两种模式都需要确认：
+- **视频比例**：16:9（横屏 YouTube，默认）还是 9:16（竖屏 Shorts / Reels / TikTok）
 - **配色偏好**：默认米色（beige），可自定义
 - **进度条高度**：默认 52px，可调整
 - **透明度**：默认 0.82，可调整
@@ -197,12 +198,23 @@ export const ChapterProgressBar: React.FC = () => {
 
 ### `src/Root.tsx`
 
+根据用户选择的比例设置尺寸：
+
+**16:9 横屏**（YouTube 普通视频，默认）：
+```tsx
+width={1920} height={1080}
+```
+
+**9:16 竖屏**（YouTube Shorts / Reels / TikTok）：
+```tsx
+width={1080} height={1920}
+```
+
 ```tsx
 import "./index.css";
 import { Composition } from "remotion";
 import { ChapterProgressBar } from "./ChapterProgressBar";
 
-// 总帧数 = 总秒数 × fps（默认 30）
 export const RemotionRoot: React.FC = () => {
   return (
     <>
@@ -211,8 +223,8 @@ export const RemotionRoot: React.FC = () => {
         component={ChapterProgressBar}
         durationInFrames={/* 总秒数 × 30 */}
         fps={30}
-        width={1920}
-        height={1080}
+        width={1920}   // 横屏：1920 / 竖屏：1080
+        height={1080}  // 横屏：1080 / 竖屏：1920
       />
     </>
   );
