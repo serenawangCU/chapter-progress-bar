@@ -1,4 +1,4 @@
-# 📊 视频进度条动画 · Chapter Progress Bar
+# 视频章节进度条动画 · Chapter Progress Bar
 
 **一键为 YouTube 视频生成章节进度条动画** —— 透明背景，可直接叠加在视频上，基于 [Remotion](https://remotion.dev) 的 AI Agent Skill。
 
