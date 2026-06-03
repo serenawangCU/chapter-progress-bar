@@ -4,7 +4,7 @@ description: >
   根据视频字幕文件（.srt）或用户直接提供的时间戳，生成章节进度条 overlay 视频（透明背景），
   支持 6 种风格：默认米色 Chapter、Dash、Minimal、TextHighlight、
   Customize（自定义 PNG 头像）、Crab（螃蟹 SVG 动画）。
-  Chapter 风格可自定义顶部/底部位置与横屏/竖屏比例。
+  Chapter 风格可自定义顶部/底部、横屏/竖屏；Customize / Crab 支持 PNG 头像与 SVG 吉祥物。
   Use when the user wants to create a chapter/section progress bar overlay for a video,
   choose among multiple visual styles, or customize with their own image asset.
 metadata:
@@ -21,7 +21,7 @@ metadata:
 
 # Chapter Progress Bar v2.0
 
-根据 `.srt` 字幕或时间戳，生成视频章节进度条 overlay。v2.0 提供 **6 种风格**，默认仍为米色 Chapter；Chapter 可另选 **顶部/底部** 与 **横屏/竖屏**。
+根据 `.srt` 字幕或时间戳，生成视频章节进度条 overlay。v2.0 提供 **6 种风格**（默认米色 Chapter）——可定制位置与比例，也支持 PNG 头像、SVG 吉祥物等品牌素材。
 
 ## 第一步：判断输入模式
 
