@@ -8,7 +8,7 @@ description: >
   Use when the user wants to create a chapter/section progress bar overlay for a video,
   choose among multiple visual styles, or customize with their own image asset.
 metadata:
-  author: serena
+  author: Serena心心
   version: "2.0"
 ---
 
