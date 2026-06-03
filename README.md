@@ -26,7 +26,7 @@ v2.0 新增 **8 种进度条风格**，默认仍为米色 Chapter 章节条。�
 
 默认风格：进度条横跨视频顶部，每个章节占据对应时长的宽度，已播放部分填充为暖棕色，未播放部分为浅米色。
 
-![Chapter Progress Bar Preview](preview.png)
+<img src="preview-bar.png" alt="Chapter Progress Bar Preview" width="100%" />
 
 ---
 
