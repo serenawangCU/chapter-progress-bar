@@ -3,7 +3,7 @@ name: chapter-progress-bar
 description: >
   根据视频字幕文件（.srt）或用户直接提供的时间戳，生成章节进度条 overlay 视频（透明背景），
   支持 8 种风格：默认米色 Chapter、底部/竖屏变体、Dash、Minimal、TextHighlight、
-  Kyomi（自定义 PNG 头像）、Crab（螃蟹 SVG 动画）。
+  Customize（自定义 PNG 头像）、Crab（螃蟹 SVG 动画）。
   Use when the user wants to create a chapter/section progress bar overlay for a video,
   choose among multiple visual styles, or customize with their own image asset.
 metadata:
@@ -60,7 +60,7 @@ metadata:
 | Dash | `DashProgressBar` | `DashProgressBar` | 分段破折号 + 下方章节名 |
 | Minimal | `MinimalProgressBar` | `MinimalProgressBar` | 极简单线 + 节点圆点，无文字 |
 | Text Highlight | `TextHighlightProgressBar` | `TextHighlightProgressBar` | 纯文字高亮，`\|` 分隔 |
-| Kyomi | `KyomiProgressBar` | `KyomiProgressBar` | 米色条 + **用户自定义 PNG 头像**沿进度移动 |
+| Customize | `KyomiProgressBar` | `KyomiProgressBar` | 米色条 + **用户上传 PNG 头像**沿进度移动 |
 | Crab | `CrabProgressBar` | `CrabProgressBar` | 粉色条 + **内置螃蟹 SVG** 沿进度爬行 |
 
 > 风格源码均在 [`src/progress-bars/`](./src/progress-bars/)，选定后只修改对应文件，不要混写多种风格到一个组件里。
@@ -95,7 +95,7 @@ const TOTAL_DURATION_S = 945; // 视频总秒数
 
 ## 第四步：定制素材（按需）
 
-### Kyomi — 用户上传 PNG 头像
+### Customize — 用户上传 PNG 头像
 
 1. 请用户提供 PNG（透明背景最佳）
 2. 保存到 `src/progress-bars/assets/`，例如 `my-avatar.png`
@@ -113,7 +113,7 @@ import myAvatar from "./assets/my-avatar.png";
 默认使用组件内 `MiniCrab` SVG（粉色螃蟹，腿会动）。用户若要换吉祥物：
 
 - **改配色**：修改 `COLORS` 和 `C`（螃蟹身体色）
-- **换造型**：用用户提供的 SVG 替换 `MiniCrab` 组件，或改为 `import` PNG + `<Img>`（参考 Kyomi 写法）
+- **换造型**：用用户提供的 SVG 替换 `MiniCrab` 组件，或改为 `import` PNG + `<Img>`（参考 Customize 写法）
 - 保持 `crabX` 随 `currentTimeS / TOTAL_DURATION_S` 移动的逻辑不变
 
 ---
@@ -132,7 +132,7 @@ npm install
 
 ```
 src/progress-bars/<SelectedComponent>.tsx   ← 选定风格的组件
-src/progress-bars/assets/                   ← Kyomi 素材（如需要）
+src/progress-bars/assets/                   ← Customize 素材（如需要）
 src/Root.tsx                                ← 参考本仓库，注册 Composition
 ```
 
@@ -235,11 +235,11 @@ npx remotion render <CompositionId> --codec=prores --prores-profile=4444 out/pro
 |------|--------|
 | 换风格 | 换 `src/progress-bars/` 中的组件 + 更新 Root.tsx |
 | 进度条更矮/高 | 各组件的 `BAR_HEIGHT` |
-| 更透明/不透明 | Chapter / Crab / Kyomi 的 `BAR_OPACITY` |
+| 更透明/不透明 | Chapter / Crab / Customize 的 `BAR_OPACITY` |
 | 换配色 | `COLORS` 对象 |
 | 字更大/小 | 各组件的 `fontSize` |
 | 章节名/时间改了 | `chapters` 数组 + `TOTAL_DURATION_S` + Root 的 `durationInFrames` |
-| Kyomi 换头像 | `assets/` 下 PNG + import 路径 |
+| Customize 换头像 | `assets/` 下 PNG + import 路径 |
 | Crab 换吉祥物 | 替换 `MiniCrab` 或改 `COLORS` |
 
 ---

@@ -34,7 +34,7 @@ v2.0 新增 **8 种进度条风格**，默认仍为米色 Chapter 章节条。�
 | Dash | 分段破折号 + 章节名 |
 | Minimal | 极简单线 + 节点圆点，无文字 |
 | Text Highlight | 纯文字高亮 + `\|` 分隔 |
-| Kyomi | 米色条 + **自定义 PNG 头像**沿进度移动 |
+| Customize | 米色条 + **自定义 PNG 头像**沿进度移动 |
 | Crab | 粉色条 + **螃蟹 SVG** 沿进度爬行 |
 
 详细对照见 [`references/styles.md`](references/styles.md)。
@@ -47,7 +47,7 @@ v2.0 新增 **8 种进度条风格**，默认仍为米色 Chapter 章节条。�
 - **自动分析字幕**：读取 `.srt` 文件，建议章节划分
 - **直接输入时间戳**：无需字幕，自己指定 `2:07 章节名` 格式即可
 - **透明背景**：导出 WebM 或 ProRes，直接叠加在视频上
-- **定制素材**：Kyomi 支持用户上传 PNG；Crab 内置 SVG 可换配色或替换吉祥物
+- **定制素材**：Customize 支持用户上传 PNG；Crab 内置 SVG 可换配色或替换吉祥物
 - **附赠 YouTube 章节格式**：同时输出可直接粘贴到视频描述的时间戳
 
 ---
@@ -66,7 +66,7 @@ v2.0 新增 **8 种进度条风格**，默认仍为米色 Chapter 章节条。�
 ```
 帮我做一个视频章节进度条动画。
 
-风格：Chapter（默认）/ Dash / Minimal / Kyomi / ...
+风格：Chapter（默认）/ Dash / Minimal / Customize / ...
 视频比例：16:9（或 9:16）
 视频时长：XX 分 XX 秒
 章节如下：
@@ -88,7 +88,7 @@ v2.0 新增 **8 种进度条风格**，默认仍为米色 Chapter 章节条。�
 **方式二**：自然语言
 ```
 帮我给这个视频做 Dash 风格的章节进度条
-帮我做 Kyomi 进度条，头像用这个 PNG
+帮我做 Customize 进度条，头像用这个 PNG
 2:07 文件夹结构
 4:46 自动化输入流
 ```
@@ -97,7 +97,7 @@ v2.0 新增 **8 种进度条风格**，默认仍为米色 Chapter 章节条。�
 
 1. Agent 读取字幕 / 接收时间戳，确认章节划分
 2. **选择进度条风格**（未指定则默认 Chapter）
-3. Kyomi / Crab 按需处理定制素材
+3. Customize / Crab 按需处理定制素材
 4. 创建或复用 Remotion overlay 项目，写入 `src/progress-bars/` 组件
 5. 启动预览 `npm run dev`，在浏览器里查看效果
 6. 用户确认后，Agent 给出渲染命令（不自动渲染）
@@ -132,10 +132,10 @@ src/
     ├── DashProgressBar.tsx
     ├── MinimalProgressBar.tsx
     ├── TextHighlightProgressBar.tsx
-    ├── KyomiProgressBar.tsx
+    ├── KyomiProgressBar.tsx          ← Customize 风格
     ├── CrabProgressBar.tsx
     └── assets/
-        └── kyomi_smile_head_stroke.png
+        └── kyomi_smile_head_stroke.png  ← Customize 默认示例头像
 ```
 
 ---

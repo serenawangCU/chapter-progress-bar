@@ -17,10 +17,10 @@ chapter-progress-bar/
         ├── DashProgressBar.tsx
         ├── MinimalProgressBar.tsx
         ├── TextHighlightProgressBar.tsx
-        ├── KyomiProgressBar.tsx
+        ├── KyomiProgressBar.tsx       ← Customize 风格
         ├── CrabProgressBar.tsx
         └── assets/
-            └── kyomi_smile_head_stroke.png   ← Kyomi 默认头像
+            └── kyomi_smile_head_stroke.png   ← Customize 默认示例头像
 ```
 
 **可运行的完整项目**（含 node_modules）：在用户本地任意目录 `cd` 进去后运行：
@@ -53,7 +53,7 @@ npm run dev
 | Dash | 120 | 米色 | 破折号高 6px |
 | Minimal | 120 | 米色 | 线高 6px，圆点 16px |
 | Text Highlight | 80 | 米色 | `fontSize 24` |
-| Kyomi | 52 | 米色 | `HEAD_H 46`，PNG import |
+| Customize | 52 | 米色 | `HEAD_H 46`，PNG import |
 | Crab | 60 | 粉色 | `CRAB_W 90`，`MiniCrab` SVG |
 
 ---

@@ -10,7 +10,7 @@
 | 4 | Dash | `DashProgressBar.tsx` | `DashProgressBar` | 16:9 | 顶部 | 无 |
 | 5 | Minimal | `MinimalProgressBar.tsx` | `MinimalProgressBar` | 16:9 | 顶部 | 无 |
 | 6 | Text Highlight | `TextHighlightProgressBar.tsx` | `TextHighlightProgressBar` | 16:9 | 顶部 | 无 |
-| 7 | Kyomi | `KyomiProgressBar.tsx` | `KyomiProgressBar` | 16:9 | 顶部 | **用户 PNG** |
+| 7 | Customize | `KyomiProgressBar.tsx` | `KyomiProgressBar` | 16:9 | 顶部 | **用户 PNG** |
 | 8 | Crab | `CrabProgressBar.tsx` | `CrabProgressBar` | 16:9 | 顶部 | 内置 SVG（可替换） |
 
 ---
@@ -42,11 +42,11 @@
 - 无实体条，仅章节名 + `|` 分隔符
 - 已走过的时间点文字高亮为 `activeText`
 
-### Kyomi
+### Customize
 
 - 与 Chapter 相同的米色分段条
-- PNG 头像（默认 `assets/kyomi_smile_head_stroke.png`）沿填充边缘移动
-- 用户替换 PNG → 改 import 路径
+- 用户上传 PNG 头像（默认示例 `assets/kyomi_smile_head_stroke.png`）沿填充边缘移动
+- 组件文件：`KyomiProgressBar.tsx`
 
 ### Crab
 
@@ -90,5 +90,5 @@ npx remotion render <CompositionId> --codec=prores --prores-profile=4444 out/pro
 示例：
 ```bash
 npx remotion render DashProgressBar --codec=vp8 out/dash-progress.webm
-npx remotion render KyomiProgressBar --codec=prores --prores-profile=4444 out/kyomi-progress.mov
+npx remotion render KyomiProgressBar --codec=prores --prores-profile=4444 out/customize-progress.mov
 ```
