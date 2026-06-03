@@ -1,6 +1,6 @@
 # 视频章节进度条动画 · Chapter Progress Bar v2.0
 
-**一键为 YouTube 视频生成章节进度条动画** —— 透明背景，可直接叠加在视频上，基于 [Remotion](https://remotion.dev) 的 AI Agent Skill。
+**一键为 YouTube / 小红书 / 抖音视频生成章节进度条动画** —— 透明背景，可直接叠加在视频上，基于 [Remotion](https://remotion.dev) 的 AI Agent Skill。
 
 v2.0 提供 **6 种进度条风格**，默认米色 Chapter。Chapter 风格还支持自定义 **顶部/底部** 和 **横屏/竖屏**。
 
@@ -83,7 +83,7 @@ v2.0 提供 **6 种进度条风格**，默认米色 Chapter。Chapter 风格还�
 - **直接输入时间戳**：无需字幕，自己指定 `2:07 章节名` 格式即可
 - **透明背景**：导出 WebM 或 ProRes，直接叠加在视频上
 - **定制素材**：Customize 支持用户上传 PNG；Crab 内置 SVG 可换配色
-- **附赠 YouTube 章节格式**：同时输出可直接粘贴到视频描述的时间戳
+- **附赠章节时间戳格式**：可同时输出 YouTube、小红书、抖音等平台描述可用的时间戳
 
 ---
 
