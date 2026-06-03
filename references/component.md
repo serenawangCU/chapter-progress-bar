@@ -12,9 +12,9 @@ chapter-progress-bar/
 └── src/
     ├── Root.tsx
     └── progress-bars/
-        ├── ChapterProgressBar.tsx          ← Chapter 顶部横屏
-        ├── ChapterProgressBarBottom.tsx    ← Chapter 底部横屏
-        ├── ChapterProgressBarPortrait.tsx  ← Chapter 顶部竖屏
+        ├── ChapterProgressBar.tsx          ← Chapter 顶部横屏（布局参考基准）
+        ├── ChapterProgressBarBottom.tsx    ← 改「条放底部」时参考
+        ├── ChapterProgressBarPortrait.tsx  ← 改「竖屏 9:16」时参考
         ├── DashProgressBar.tsx
         ├── MinimalProgressBar.tsx
         ├── TextHighlightProgressBar.tsx
@@ -40,14 +40,14 @@ chapter-progress-bar/
 
 ## 各风格关键参数
 
-| 风格 | BAR_HEIGHT | 默认配色 | 备注 |
+| 风格 | BAR_HEIGHT | 默认配色 | 布局 |
 |------|------------|----------|------|
-| Chapter | 52 | 米色 | 可 top/bottom、16:9/9:16 |
-| Dash | 120 | 米色 | 破折号高 6px |
-| Minimal | 120 | 米色 | 线高 6px，圆点 16px |
-| Text Highlight | 80 | 米色 | `fontSize 24` |
-| Customize | 52 | 米色 | PNG import，`HEAD_H 46` |
-| Crab | 60 | 粉色 | `MiniCrab` SVG |
+| Chapter | 52 | 米色 | 有 3 个变体文件 |
+| Dash | 120 | 米色 | 参考 Chapter 改底部/竖屏 |
+| Minimal | 120 | 米色 | 参考 Chapter 改底部/竖屏 |
+| Text Highlight | 80 | 米色 | 参考 Chapter 改底部/竖屏 |
+| Customize | 52 | 米色 | 参考 Chapter 改底部/竖屏 |
+| Crab | 60 | 粉色 | 参考 Chapter 改底部/竖屏 |
 
 ---
 

@@ -26,12 +26,33 @@ v2.0 提供 **6 种进度条风格**（默认米色 Chapter）——可自定义
 
 ## 6 种风格 · Styles
 
-以下预览均截取于 **3:00** 时刻，便于看清进度效果。
+以下预览均截取于 **3:00** 时刻，便于看清进度效果。默认均为 **顶部 + 横屏 16:9**。
+
+### 位置 & 比例（全部 6 种风格均适用）
+
+| 选项 | 默认 | 说明 |
+|------|------|------|
+| 位置 | 顶部 | 顶部 / 底部 |
+| 比例 | 横屏 16:9 | 横屏 16:9 / 竖屏 9:16 |
+
+**Chapter 风格**已提供现成组件，直接选用即可：
+
+| 位置 | 比例 | 组件 |
+|------|------|------|
+| 顶部 | 横屏 16:9 | `ChapterProgressBar` |
+| 底部 | 横屏 16:9 | `ChapterProgressBarBottom` |
+| 顶部 | 竖屏 9:16 | `ChapterProgressBarPortrait` |
+
+**其他 5 种风格**（Dash / Minimal / Text Highlight / Customize / Crab）默认可直接改 Root 的 `width`/`height` 适配竖屏；若要改条的位置（顶部→底部），参考 `ChapterProgressBarBottom.tsx` 的写法，把对应逻辑应用到所选风格的组件里。
+
+---
 
 ### 1. Chapter（默认）
 
 米色分段条 + 章节名，支持主标题与副标题两行。
 
+<<<<<<< HEAD
+=======
 **可自定义（仅 Chapter 风格）：**
 
 | 选项 | 选择 | 对应组件 |
@@ -39,6 +60,7 @@ v2.0 提供 **6 种进度条风格**（默认米色 Chapter）——可自定义
 | 位置 | 顶部（默认）/ 底部 | `ChapterProgressBar` / `ChapterProgressBarBottom` |
 | 比例 | 横屏 16:9（默认）/ 竖屏 9:16 | `ChapterProgressBar` / `ChapterProgressBarPortrait` |
 
+>>>>>>> origin/main
 <img src="previews/chapter-preview.png" alt="Chapter progress bar" width="960" height="32" />
 
 ### 2. Dash
@@ -78,7 +100,7 @@ v2.0 提供 **6 种进度条风格**（默认米色 Chapter）——可自定义
 ## 功能 · Features
 
 - **6 种视觉风格**：一键切换，默认 Chapter
-- **灵活定制**：Chapter 可选顶部/底部、横屏/竖屏；Customize 可上传 PNG 头像；Crab 可替换 SVG 吉祥物
+- **灵活定制**：全部风格可选顶部/底部、横屏/竖屏（Chapter 有现成组件；其他风格参考 Chapter 改法）
 - **自动分析字幕**：读取 `.srt` 文件，建议章节划分
 - **直接输入时间戳**：无需字幕，自己指定 `2:07 章节名` 格式即可
 - **透明背景**：导出 WebM 或 ProRes，直接叠加在视频上
@@ -99,8 +121,8 @@ v2.0 提供 **6 种进度条风格**（默认米色 Chapter）——可自定义
 帮我做一个视频章节进度条动画。
 
 风格：Chapter（默认）/ Dash / Minimal / Customize / ...
-位置：顶部 / 底部（Chapter 可选）
-比例：16:9 横屏 / 9:16 竖屏（Chapter 可选）
+位置：顶部 / 底部
+比例：16:9 横屏 / 9:16 竖屏
 视频时长：XX 分 XX 秒
 章节如下：
 0:00 章节一
@@ -120,16 +142,15 @@ v2.0 提供 **6 种进度条风格**（默认米色 Chapter）——可自定义
 
 **方式二**：自然语言
 ```
-帮我给这个视频做 Dash 风格的章节进度条
-帮我做 Customize 进度条，头像用这个 PNG
-Chapter 风格，条放底部，竖屏 9:16
+帮我给这个视频做 Dash 风格的章节进度条，条放底部
+帮我做 Customize 进度条，竖屏 9:16，头像用这个 PNG
 ```
 
 ### 流程
 
 1. Agent 读取字幕 / 接收时间戳，确认章节划分
 2. **选择 6 种风格之一**（未指定则默认 Chapter）
-3. Chapter 风格：确认顶部/底部、横屏/竖屏
+3. 确认顶部/底部、横屏/竖屏（Chapter 直接换组件；其他风格参考 Chapter 改法）
 4. Customize / Crab 按需处理定制素材
 5. 创建或复用 Remotion overlay 项目，写入 `src/progress-bars/` 组件
 6. 启动预览 `npm run dev`，在浏览器里查看效果
@@ -159,9 +180,9 @@ npx remotion render DashProgressBar --codec=vp8 out/dash-progress.webm
 src/
 ├── Root.tsx
 └── progress-bars/
-    ├── ChapterProgressBar.tsx          ← Chapter 顶部横屏
-    ├── ChapterProgressBarBottom.tsx    ← Chapter 底部横屏
-    ├── ChapterProgressBarPortrait.tsx  ← Chapter 顶部竖屏
+    ├── ChapterProgressBar.tsx          ← Chapter 顶部横屏（布局参考基准）
+    ├── ChapterProgressBarBottom.tsx    ← Chapter 底部横屏（改位置参考）
+    ├── ChapterProgressBarPortrait.tsx  ← Chapter 顶部竖屏（竖屏参考）
     ├── DashProgressBar.tsx
     ├── MinimalProgressBar.tsx
     ├── TextHighlightProgressBar.tsx

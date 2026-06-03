@@ -11,13 +11,18 @@
 | 5 | Customize | `KyomiProgressBar.tsx` | `KyomiProgressBar` | **用户 PNG** |
 | 6 | Crab | `CrabProgressBar.tsx` | `CrabProgressBar` | 内置 SVG（可替换） |
 
-预览图见 [`previews/`](../previews/)（均截取于 **3:00** 时刻）。
+预览图见 [`previews/`](../previews/)（均截取于 **3:00** 时刻，默认顶部横屏）。
 
 ---
 
-## Chapter 布局选项
+## 位置 & 比例（全部 6 种风格均适用）
 
-Chapter 是唯一的 **6 种风格之一**，同时支持用户自定义位置与比例：
+| 选项 | 默认 |
+|------|------|
+| 位置 | 顶部 |
+| 比例 | 横屏 16:9 |
+
+### Chapter — 现成布局组件
 
 | 位置 | 比例 | 文件 | Composition ID | Root 尺寸 |
 |------|------|------|----------------|-----------|
@@ -25,9 +30,15 @@ Chapter 是唯一的 **6 种风格之一**，同时支持用户自定义位置�
 | 底部 | 横屏 16:9 | `ChapterProgressBarBottom.tsx` | `ChapterProgressBarBottom` | 1920×1080 |
 | 顶部 | 竖屏 9:16 | `ChapterProgressBarPortrait.tsx` | `ChapterProgressBarPortrait` | 1080×1920 |
 
-> `ChapterProgressBarBottom` 与 `ChapterProgressBarPortrait` 是 Chapter 的**布局变体**，不是独立风格。
+### 其他 5 种风格 — 参考 Chapter 改法
 
-其余 5 种风格默认为顶部横屏 16:9。
+仓库未预置底部/竖屏变体，但**全部风格都支持**自定义位置与比例：
+
+| 需求 | 参考文件 | 改什么 |
+|------|----------|--------|
+| 竖屏 9:16 | `ChapterProgressBarPortrait.tsx` | Root `1080×1920`；窄格自适应字号 |
+| 条放底部 | `ChapterProgressBarBottom.tsx` | 容器 `bottom: 0`；阴影方向翻转 |
+| 底部 + 竖屏 | 以上两个 | 同时应用 |
 
 ---
 
@@ -37,33 +48,27 @@ Chapter 是唯一的 **6 种风格之一**，同时支持用户自定义位置�
 
 - 分段填充 + 章节名，支持 `label` + `sub` 两行
 - 默认色：`filled #C09070` · `unfilled #EDE4D4`
-- 可定制：顶部/底部、横屏/竖屏（见上表）
 
 ### Dash
 
 - 每段上方一条圆角破折号，下方章节名
-- 文字颜色随播放进度变化（已播/当前 vs 未播）
+- 文字颜色随播放进度变化
 
 ### Minimal
 
-- 单条 6px 细线 + 章节节点圆点
-- **无章节文字**，最简洁
+- 单条 6px 细线 + 章节节点圆点，无章节文字
 
 ### Text Highlight
 
 - 无实体条，仅章节名 + `|` 分隔符
-- 已走过的时间点文字高亮
 
 ### Customize
 
-- 与 Chapter 相同的米色分段条
-- 用户上传 PNG 头像沿填充边缘移动
-- 组件文件：`KyomiProgressBar.tsx`
+- 米色分段条 + 用户 PNG 头像沿填充边缘移动
 
 ### Crab
 
-- 粉色分段条（`#E8738A` / `#F5C0CC`）
-- 内置 `MiniCrab` SVG 沿进度爬行，腿有动画
+- 粉色分段条 + 内置 `MiniCrab` SVG 沿进度爬行
 
 ---
 
@@ -86,11 +91,4 @@ const chapters = [
 ```bash
 npx remotion render <CompositionId> --codec=vp8 out/progress-bar.webm
 npx remotion render <CompositionId> --codec=prores --prores-profile=4444 out/progress-bar.mov
-```
-
-示例：
-```bash
-npx remotion render ChapterProgressBar --codec=vp8 out/chapter.webm
-npx remotion render DashProgressBar --codec=vp8 out/dash.webm
-npx remotion render KyomiProgressBar --codec=vp8 out/customize.webm
 ```
