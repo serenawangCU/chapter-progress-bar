@@ -1,8 +1,8 @@
-# 视频章节进度条动画 · Chapter Progress Bar
+# 视频章节进度条动画 · Chapter Progress Bar v2.0
 
 **一键为 YouTube 视频生成章节进度条动画** —— 透明背景，可直接叠加在视频上，基于 [Remotion](https://remotion.dev) 的 AI Agent Skill。
 
-给视频顶部加一条进度条，清晰显示当前播放到哪个章节，随着视频播放自动填充。支持横屏（16:9）和竖屏（9:16）。
+v2.0 新增 **8 种进度条风格**，默认仍为米色 Chapter 章节条。支持横屏（16:9）和竖屏（9:16）。
 
 ---
 
@@ -18,19 +18,36 @@
 
 ## 效果预览 · Preview
 
-进度条横跨视频顶部，每个章节占据对应时长的宽度，已播放部分填充为暖棕色，未播放部分为浅米色。
+默认风格：进度条横跨视频顶部，每个章节占据对应时长的宽度，已播放部分填充为暖棕色，未播放部分为浅米色。
 
 ![Chapter Progress Bar Preview](preview.png)
 
 ---
 
+## 8 种风格 · Styles
+
+| 风格 | 说明 |
+|------|------|
+| **Chapter（默认）** | 米色分段条 + 章节名，顶部 |
+| Chapter Bottom | 同上，条在底部 |
+| Chapter Portrait | 同上，竖屏 9:16 |
+| Dash | 分段破折号 + 章节名 |
+| Minimal | 极简单线 + 节点圆点，无文字 |
+| Text Highlight | 纯文字高亮 + `\|` 分隔 |
+| Kyomi | 米色条 + **自定义 PNG 头像**沿进度移动 |
+| Crab | 粉色条 + **螃蟹 SVG** 沿进度爬行 |
+
+详细对照见 [`references/styles.md`](references/styles.md)。
+
+---
+
 ## 功能 · Features
 
+- **8 种视觉风格**：一键切换，默认米色 Chapter
 - **自动分析字幕**：读取 `.srt` 文件，建议章节划分
 - **直接输入时间戳**：无需字幕，自己指定 `2:07 章节名` 格式即可
 - **透明背景**：导出 WebM 或 ProRes，直接叠加在视频上
-- **米色配色**：暖棕 + 浅米，低调不抢戏
-- **可自定义**：高度、透明度、颜色、字号均可调整
+- **定制素材**：Kyomi 支持用户上传 PNG；Crab 内置 SVG 可换配色或替换吉祥物
 - **附赠 YouTube 章节格式**：同时输出可直接粘贴到视频描述的时间戳
 
 ---
@@ -40,15 +57,16 @@
 ### 前置条件
 
 - Node.js ≥ 18
-- 已安装 Claude Code
+- 已安装 Claude Code / Cursor 等 AI Agent
 
 ### ⚡ 快速开始
 
-直接把下面这段复制给 Claude，填入你的信息就能用：
+直接把下面这段复制给 Agent，填入你的信息就能用：
 
 ```
 帮我做一个视频章节进度条动画。
 
+风格：Chapter（默认）/ Dash / Minimal / Kyomi / ...
 视频比例：16:9（或 9:16）
 视频时长：XX 分 XX 秒
 章节如下：
@@ -58,32 +76,31 @@
 ...
 ```
 
-或者直接扔 `.srt` 字幕文件给 Claude，让它自动分析章节。
+或者直接扔 `.srt` 字幕文件给 Agent，让它自动分析章节。
 
 ### 触发方式
 
-**方式一**：直接输入 slash command：
+**方式一**：slash command
 ```
 /chapter-progress-bar
 ```
 
-**方式二**：自然语言，Claude 自动识别：
+**方式二**：自然语言
 ```
-帮我给这个视频做章节进度条  →  提供 .srt 文件
-
+帮我给这个视频做 Dash 风格的章节进度条
+帮我做 Kyomi 进度条，头像用这个 PNG
 2:07 文件夹结构
 4:46 自动化输入流
-7:08 闪念胶囊
-帮我做进度条               →  直接用这些时间戳
 ```
 
 ### 流程
 
-1. Claude 读取字幕 / 接收时间戳，确认章节划分
-2. 创建或复用 Remotion overlay 项目
-3. 生成 `ChapterProgressBar.tsx` 和 `Root.tsx`
-4. 启动预览 `npm run dev`，在浏览器里查看效果
-5. 渲染输出透明背景视频文件
+1. Agent 读取字幕 / 接收时间戳，确认章节划分
+2. **选择进度条风格**（未指定则默认 Chapter）
+3. Kyomi / Crab 按需处理定制素材
+4. 创建或复用 Remotion overlay 项目，写入 `src/progress-bars/` 组件
+5. 启动预览 `npm run dev`，在浏览器里查看效果
+6. 用户确认后，Agent 给出渲染命令（不自动渲染）
 
 ---
 
@@ -94,19 +111,32 @@
 | WebM (VP8) | `--codec=vp8` | 通用，DaVinci / Premiere |
 | ProRes 4444 | `--codec=prores --prores-profile=4444` | Final Cut Pro |
 
+```bash
+npx remotion render ChapterProgressBar --codec=vp8 out/progress-bar.webm
+npx remotion render DashProgressBar --codec=vp8 out/dash-progress.webm
+```
+
 渲染完成后，在剪辑软件里把文件拖到视频轨道**最上层**即可。
 
 ---
 
-## 自定义参数 · Customization
+## 项目结构 · Project Structure
 
-| 参数 | 默认值 | 说明 |
-|------|--------|------|
-| `BAR_HEIGHT` | `52px` | 进度条高度 |
-| `opacity` | `0.82` | 透明度（0 全透明 → 1 不透明） |
-| `COLORS.filled` | `#C09070` | 已播放颜色 |
-| `COLORS.unfilled` | `#EDE4D4` | 未播放颜色 |
-| `fontSize` | `20px` | 章节文字大小 |
+```
+src/
+├── Root.tsx
+└── progress-bars/
+    ├── ChapterProgressBar.tsx        ← 默认
+    ├── ChapterProgressBarBottom.tsx
+    ├── ChapterProgressBarPortrait.tsx
+    ├── DashProgressBar.tsx
+    ├── MinimalProgressBar.tsx
+    ├── TextHighlightProgressBar.tsx
+    ├── KyomiProgressBar.tsx
+    ├── CrabProgressBar.tsx
+    └── assets/
+        └── kyomi_smile_head_stroke.png
+```
 
 ---
 

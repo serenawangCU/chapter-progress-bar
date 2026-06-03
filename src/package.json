@@ -1,7 +1,7 @@
 {
-  "name": "obsidian-progress-bar",
-  "version": "1.0.0",
-  "description": "My Remotion video",
+  "name": "chapter-progress-bar",
+  "version": "2.0.0",
+  "description": "Chapter progress bar overlay — 8 styles for Remotion",
   "repository": {},
   "license": "UNLICENSED",
   "private": true,
