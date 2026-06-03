@@ -2,7 +2,9 @@
 
 **一键为 YouTube 视频生成章节进度条动画** —— 透明背景，可直接叠加在视频上，基于 [Remotion](https://remotion.dev) 的 AI Agent Skill。
 
-v2.0 新增 **8 种进度条风格**，默认仍为米色 Chapter 章节条。支持横屏（16:9）和竖屏（9:16）。
+v2.0 提供 **6 种进度条风格**，默认米色 Chapter。Chapter 风格还支持自定义 **顶部/底部** 和 **横屏/竖屏**。
+
+---
 
 ## 为什么用代码做视频？ · Why Code Your Edits?
 
@@ -22,26 +24,52 @@ v2.0 新增 **8 种进度条风格**，默认仍为米色 Chapter 章节条。�
 
 ---
 
-## 效果预览 · Preview
+## 6 种风格 · Styles
 
-默认风格：进度条横跨视频顶部，每个章节占据对应时长的宽度，已播放部分填充为暖棕色，未播放部分为浅米色。
+以下预览均截取于 **3:00** 时刻，便于看清进度效果。
 
-<img src="preview-bar.png" alt="Chapter Progress Bar Preview" width="100%" />
+### 1. Chapter（默认）
 
----
+米色分段条 + 章节名，支持主标题与副标题两行。
 
-## 8 种风格 · Styles
+**可自定义（仅 Chapter 风格）：**
 
-| 风格 | 说明 |
-|------|------|
-| **Chapter（默认）** | 米色分段条 + 章节名，顶部 |
-| Chapter Bottom | 同上，条在底部 |
-| Chapter Portrait | 同上，竖屏 9:16 |
-| Dash | 分段破折号 + 章节名 |
-| Minimal | 极简单线 + 节点圆点，无文字 |
-| Text Highlight | 纯文字高亮 + `\|` 分隔 |
-| Customize | 米色条 + **自定义 PNG 头像**沿进度移动 |
-| Crab | 粉色条 + **螃蟹 SVG** 沿进度爬行 |
+| 选项 | 选择 | 对应组件 |
+|------|------|----------|
+| 位置 | 顶部（默认）/ 底部 | `ChapterProgressBar` / `ChapterProgressBarBottom` |
+| 比例 | 横屏 16:9（默认）/ 竖屏 9:16 | `ChapterProgressBar` / `ChapterProgressBarPortrait` |
+
+<img src="previews/chapter.png" alt="Chapter progress bar" width="100%" />
+
+### 2. Dash
+
+分段破折号 + 下方章节名，文字颜色随播放进度变化。
+
+<img src="previews/dash.png" alt="Dash progress bar" width="100%" />
+
+### 3. Minimal
+
+极简单线 + 节点圆点，无章节文字，最简洁。
+
+<img src="previews/minimal.png" alt="Minimal progress bar" width="100%" />
+
+### 4. Text Highlight
+
+无实体进度条，纯章节名 + `|` 分隔符，已播放部分文字高亮。
+
+<img src="previews/text-highlight.png" alt="Text Highlight progress bar" width="100%" />
+
+### 5. Customize
+
+米色分段条 + **用户上传 PNG 头像**，沿播放进度移动。
+
+<img src="previews/customize.png" alt="Customize progress bar" width="100%" />
+
+### 6. Crab
+
+粉色分段条 + 内置螃蟹 SVG 沿进度爬行（腿有动画，可换配色或替换吉祥物）。
+
+<img src="previews/crab.png" alt="Crab progress bar" width="100%" />
 
 详细对照见 [`references/styles.md`](references/styles.md)。
 
@@ -49,11 +77,12 @@ v2.0 新增 **8 种进度条风格**，默认仍为米色 Chapter 章节条。�
 
 ## 功能 · Features
 
-- **8 种视觉风格**：一键切换，默认米色 Chapter
+- **6 种视觉风格**：一键切换，默认 Chapter
+- **Chapter 可定制**：顶部/底部、横屏/竖屏
 - **自动分析字幕**：读取 `.srt` 文件，建议章节划分
 - **直接输入时间戳**：无需字幕，自己指定 `2:07 章节名` 格式即可
 - **透明背景**：导出 WebM 或 ProRes，直接叠加在视频上
-- **定制素材**：Customize 支持用户上传 PNG；Crab 内置 SVG 可换配色或替换吉祥物
+- **定制素材**：Customize 支持用户上传 PNG；Crab 内置 SVG 可换配色
 - **附赠 YouTube 章节格式**：同时输出可直接粘贴到视频描述的时间戳
 
 ---
@@ -67,13 +96,12 @@ v2.0 新增 **8 种进度条风格**，默认仍为米色 Chapter 章节条。�
 
 ### ⚡ 快速开始
 
-直接把下面这段复制给 Agent，填入你的信息就能用：
-
 ```
 帮我做一个视频章节进度条动画。
 
 风格：Chapter（默认）/ Dash / Minimal / Customize / ...
-视频比例：16:9（或 9:16）
+位置：顶部 / 底部（Chapter 可选）
+比例：16:9 横屏 / 9:16 竖屏（Chapter 可选）
 视频时长：XX 分 XX 秒
 章节如下：
 0:00 章节一
@@ -95,18 +123,18 @@ v2.0 新增 **8 种进度条风格**，默认仍为米色 Chapter 章节条。�
 ```
 帮我给这个视频做 Dash 风格的章节进度条
 帮我做 Customize 进度条，头像用这个 PNG
-2:07 文件夹结构
-4:46 自动化输入流
+Chapter 风格，条放底部，竖屏 9:16
 ```
 
 ### 流程
 
 1. Agent 读取字幕 / 接收时间戳，确认章节划分
-2. **选择进度条风格**（未指定则默认 Chapter）
-3. Customize / Crab 按需处理定制素材
-4. 创建或复用 Remotion overlay 项目，写入 `src/progress-bars/` 组件
-5. 启动预览 `npm run dev`，在浏览器里查看效果
-6. 用户确认后，Agent 给出渲染命令（不自动渲染）
+2. **选择 6 种风格之一**（未指定则默认 Chapter）
+3. Chapter 风格：确认顶部/底部、横屏/竖屏
+4. Customize / Crab 按需处理定制素材
+5. 创建或复用 Remotion overlay 项目，写入 `src/progress-bars/` 组件
+6. 启动预览 `npm run dev`，在浏览器里查看效果
+7. 用户确认后，Agent 给出渲染命令（不自动渲染）
 
 ---
 
@@ -132,16 +160,16 @@ npx remotion render DashProgressBar --codec=vp8 out/dash-progress.webm
 src/
 ├── Root.tsx
 └── progress-bars/
-    ├── ChapterProgressBar.tsx        ← 默认
-    ├── ChapterProgressBarBottom.tsx
-    ├── ChapterProgressBarPortrait.tsx
+    ├── ChapterProgressBar.tsx          ← Chapter 顶部横屏
+    ├── ChapterProgressBarBottom.tsx    ← Chapter 底部横屏
+    ├── ChapterProgressBarPortrait.tsx  ← Chapter 顶部竖屏
     ├── DashProgressBar.tsx
     ├── MinimalProgressBar.tsx
     ├── TextHighlightProgressBar.tsx
-    ├── KyomiProgressBar.tsx          ← Customize 风格
+    ├── KyomiProgressBar.tsx            ← Customize 风格
     ├── CrabProgressBar.tsx
     └── assets/
-        └── kyomi_smile_head_stroke.png  ← Customize 默认示例头像
+        └── kyomi_smile_head_stroke.png
 ```
 
 ---
