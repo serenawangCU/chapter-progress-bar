@@ -39,37 +39,37 @@ v2.0 提供 **6 种进度条风格**（默认米色 Chapter）——可自定义
 | 位置 | 顶部（默认）/ 底部 | `ChapterProgressBar` / `ChapterProgressBarBottom` |
 | 比例 | 横屏 16:9（默认）/ 竖屏 9:16 | `ChapterProgressBar` / `ChapterProgressBarPortrait` |
 
-<img src="previews/chapter.png" alt="Chapter progress bar" width="100%" />
+<img src="previews/chapter.png?v=2" alt="Chapter progress bar" width="100%" />
 
 ### 2. Dash
 
 分段破折号 + 下方章节名，文字颜色随播放进度变化。
 
-<img src="previews/dash.png" alt="Dash progress bar" width="100%" />
+<img src="previews/dash.png?v=2" alt="Dash progress bar" width="100%" />
 
 ### 3. Minimal
 
 极简单线 + 节点圆点，无章节文字，最简洁。
 
-<img src="previews/minimal.png" alt="Minimal progress bar" width="100%" />
+<img src="previews/minimal.png?v=2" alt="Minimal progress bar" width="100%" />
 
 ### 4. Text Highlight
 
 无实体进度条，纯章节名 + `|` 分隔符，已播放部分文字高亮。
 
-<img src="previews/text-highlight.png" alt="Text Highlight progress bar" width="100%" />
+<img src="previews/text-highlight.png?v=2" alt="Text Highlight progress bar" width="100%" />
 
 ### 5. Customize
 
 米色分段条 + **用户上传 PNG 头像**，沿播放进度移动。
 
-<img src="previews/customize.png" alt="Customize progress bar" width="100%" />
+<img src="previews/customize.png?v=2" alt="Customize progress bar" width="100%" />
 
 ### 6. Crab
 
 粉色分段条 + 内置螃蟹 SVG 沿进度爬行（腿有动画，可换配色或替换吉祥物）。
 
-<img src="previews/crab.png" alt="Crab progress bar" width="100%" />
+<img src="previews/crab.png?v=2" alt="Crab progress bar" width="100%" />
 
 详细对照见 [`references/styles.md`](references/styles.md)。
 
