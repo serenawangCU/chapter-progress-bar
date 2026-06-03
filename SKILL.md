@@ -2,8 +2,9 @@
 name: chapter-progress-bar
 description: >
   根据视频字幕文件（.srt）或用户直接提供的时间戳，生成章节进度条 overlay 视频（透明背景），
-  支持 8 种风格：默认米色 Chapter、底部/竖屏变体、Dash、Minimal、TextHighlight、
+  支持 6 种风格：默认米色 Chapter、Dash、Minimal、TextHighlight、
   Customize（自定义 PNG 头像）、Crab（螃蟹 SVG 动画）。
+  Chapter 风格可自定义顶部/底部位置与横屏/竖屏比例。
   Use when the user wants to create a chapter/section progress bar overlay for a video,
   choose among multiple visual styles, or customize with their own image asset.
 metadata:
@@ -13,14 +14,14 @@ metadata:
 
 ## References
 
-- [styles.md](./references/styles.md) — 8 种风格对照表、Composition ID、适用场景
+- [styles.md](./references/styles.md) — 6 种风格对照表、Chapter 布局选项、Composition ID
 - [component.md](./references/component.md) — 关键常量、文件结构、渲染命令
 - [src/progress-bars/](./src/progress-bars/) — 全部组件源码（直接复制修改）
 - [src/Root.tsx](./src/Root.tsx) — Composition 注册示例
 
 # Chapter Progress Bar v2.0
 
-根据 `.srt` 字幕或时间戳，生成视频章节进度条 overlay。v2.0 支持 **8 种风格**，默认仍为米色 `ChapterProgressBar`。
+根据 `.srt` 字幕或时间戳，生成视频章节进度条 overlay。v2.0 提供 **6 种风格**，默认仍为米色 Chapter；Chapter 可另选 **顶部/底部** 与 **横屏/竖屏**。
 
 ## 第一步：判断输入模式
 
@@ -48,15 +49,13 @@ metadata:
 
 ## 第二步：选择进度条风格
 
-**若用户未指定风格，默认使用 `ChapterProgressBar`（米色，顶部）。**
+**若用户未指定风格，默认使用 Chapter（米色，顶部横屏）。**
 
-向用户展示可选风格（可用简短描述 + 让用户选编号或名称）：
+向用户展示 **6 种风格**（可用简短描述 + 让用户选编号或名称）：
 
 | 风格 | 组件 | Composition ID | 说明 |
 |------|------|----------------|------|
-| **Chapter（默认）** | `ChapterProgressBar` | `ChapterProgressBar` | 米色分段条，顶部，支持主标题 + 副标题 |
-| Chapter Bottom | `ChapterProgressBarBottom` | `ChapterProgressBarBottom` | 同上，条在**底部** |
-| Chapter Portrait | `ChapterProgressBarPortrait` | `ChapterProgressBarPortrait` | 同上，**竖屏 9:16**，字号自适应 |
+| **Chapter（默认）** | 见第三步布局选项 | 见第三步 | 米色分段条 + 章节名，可定制位置与比例 |
 | Dash | `DashProgressBar` | `DashProgressBar` | 分段破折号 + 下方章节名 |
 | Minimal | `MinimalProgressBar` | `MinimalProgressBar` | 极简单线 + 节点圆点，无文字 |
 | Text Highlight | `TextHighlightProgressBar` | `TextHighlightProgressBar` | 纯文字高亮，`\|` 分隔 |
@@ -67,14 +66,22 @@ metadata:
 
 ---
 
-## 第三步：确认通用参数
+## 第三步：确认布局与通用参数
+
+### Chapter 布局选项（仅 Chapter 风格）
+
+| 位置 | 比例 | 组件 | Composition ID | Root 尺寸 |
+|------|------|------|----------------|-----------|
+| 顶部（默认） | 横屏 16:9 | `ChapterProgressBar` | `ChapterProgressBar` | 1920×1080 |
+| 底部 | 横屏 16:9 | `ChapterProgressBarBottom` | `ChapterProgressBarBottom` | 1920×1080 |
+| 顶部 | 竖屏 9:16 | `ChapterProgressBarPortrait` | `ChapterProgressBarPortrait` | 1080×1920 |
+
+其他 5 种风格（Dash / Minimal / Text Highlight / Customize / Crab）目前为 **顶部横屏 16:9**。
+
+### 通用参数
 
 两种输入模式都需要确认：
 
-- **视频比例**
-  - 16:9 横屏（YouTube 默认）→ 除 Portrait 外均可
-  - 9:16 竖屏（Shorts / Reels / TikTok）→ 使用 `ChapterProgressBarPortrait`，Root 设为 `1080×1920`
-- **进度条位置**（仅 Chapter 系列）：顶部（默认）或底部（`ChapterProgressBarBottom`）
 - **配色**：默认米色（`#C09070` / `#EDE4D4`）；Crab 默认粉色；可按风格改 `COLORS` 对象
 - **章节数据结构**：所有组件统一使用
 
