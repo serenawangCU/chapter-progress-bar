@@ -204,7 +204,56 @@ export const RemotionRoot: React.FC = () => {
 
 ---
 
-## 第七步：启动预览服务器
+## 第七步：检查章节文字是否被遮挡
+
+生成进度条后、告知用户预览之前，**必须自动做一次文字可读性检查**。章节一多、某段时长一短，或者 Customize / Crab 的吉祥物在条上移动时，很容易出现「字被竖线切到」「字溢出格子」或「图片盖住字」——这类问题要在交付预览前发现并修掉。
+
+### 检查什么
+
+重点看章节名（`label` / `sub`）是否被以下元素影响：
+
+| 风险来源 | 常见于 | 表现 |
+|----------|--------|------|
+| **竖向分隔线** | Chapter、Crab、Customize | 分隔线正好压在字中间，或字跨两格 |
+| **格宽太窄** | 章节多、某段时长短、竖屏 9:16 | 文字被 `overflow: hidden` 裁切，或两行叠在一起 |
+| **PNG 头像 / SVG 吉祥物** | Customize、Crab | 头像或螃蟹爬过某格时，盖住该格章节名 |
+
+> Minimal 无文字，Text Highlight 无竖条分隔，可跳过竖线相关检查，但仍需确认文字没有挤在一起。
+
+### 怎么检查
+
+1. **估算每格宽度**（像素）：
+   ```
+   格宽 ≈ (chapter.endS - chapter.startS) / TOTAL_DURATION_S × 画布宽度
+   ```
+   竖屏画布宽度为 1080，横屏为 1920。
+
+2. **对照文字长度**：逐条看 `label`（和 `sub`）在该格宽里是否合理；**优先检查时长最短的几格**。
+
+3. **预览截图核查**（推荐）：启动预览后，在 Remotion Studio 里跳到 **3:00** 以及 2–3 个章节切换点，肉眼看：
+   - 字有没有被竖线「切」到
+   - 字有没有只露出一半
+   - Customize 头像 / Crab 有没有盖住正在播放那一格的标题
+
+   也可用 `remotion still` 在同一时间点导出截图辅助判断。
+
+4. **有问题就改，改完再查一遍**，直到文字清晰可读。
+
+### 常见问题与修复
+
+| 问题 | 处理方式 |
+|------|----------|
+| 竖线压在字上 | 缩短章节名、去掉 `sub`、略减小 `fontSize`、或微调章节边界让格宽更均匀 |
+| 字被裁切 / 溢出 | 同上；竖屏参考 `ChapterProgressBarPortrait` 的自适应字号逻辑 |
+| 头像 / 螃蟹盖住字 | 缩小 `HEAD_H` / `CRAB_W`，或调整吉祥物 vertical 位置，确保不遮挡当前格标题 |
+| 章节太多、怎么改都挤 | 建议用户合并相邻章节，或改用 Dash / Text Highlight / Minimal |
+
+> [!IMPORTANT]
+> **检查通过之前，不要告诉用户「已经完成」。** 应主动说明发现了什么问题、做了什么调整。
+
+---
+
+## 第八步：启动预览服务器
 
 写完代码后，直接运行：
 
@@ -220,7 +269,7 @@ npm run dev
 
 ---
 
-## 第八步：用户明确要求后，给出渲染命令（不要帮用户执行）
+## 第九步：用户明确要求后，给出渲染命令（不要帮用户执行）
 
 用户确认效果 OK 后，**只给出命令，让用户自己粘贴执行**。将 `<CompositionId>` 替换为实际 ID（如 `DashProgressBar`）：
 
@@ -245,6 +294,7 @@ npx remotion render <CompositionId> --codec=prores --prores-profile=4444 out/pro
 | 更透明/不透明 | Chapter / Crab / Customize 的 `BAR_OPACITY` |
 | 换配色 | `COLORS` 对象 |
 | 字更大/小 | 各组件的 `fontSize` |
+| 字被竖线挡 / 被裁切 | 缩短 `label`、去掉 `sub`、调 `fontSize`；见第七步可读性检查 |
 | 章节名/时间改了 | `chapters` 数组 + `TOTAL_DURATION_S` + Root 的 `durationInFrames` |
 | Customize 换头像 | `assets/` 下 PNG + import 路径 |
 | Crab 换吉祥物 | 替换 `MiniCrab` 或改 `COLORS` |
