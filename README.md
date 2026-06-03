@@ -10,7 +10,7 @@ v2.0 提供 **6 种进度条风格**（默认米色 Chapter）——可自定义
 
 传统剪辑靠拖拽时间轴；用 React + [Remotion](https://remotion.dev) 写代码生成动画，改一行参数就能复用，透明 overlay 导出也更精准。进度条、片头、字幕动效这类**可复用元素**，用代码做往往比手动 K 帧更快、更一致——这也是越来越多创作者在探索的剪辑方式。
 
-👉 想看完整演示，见 Serena 的 YouTube 视频：[用 AI 写代码做视频](https://youtu.be/fB4uipaYYeU?si=HgXvuPuKfeFQDOUp)
+👉 [你为什么立即要开始写代码做视频，告别手动剪辑](https://youtu.be/fB4uipaYYeU?si=HgXvuPuKfeFQDOUp)
 
 ---
 
