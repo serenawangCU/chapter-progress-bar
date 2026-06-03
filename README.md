@@ -51,16 +51,6 @@ v2.0 提供 **6 种进度条风格**（默认米色 Chapter）——可自定义
 
 米色分段条 + 章节名，支持主标题与副标题两行。
 
-<<<<<<< HEAD
-=======
-**可自定义（仅 Chapter 风格）：**
-
-| 选项 | 选择 | 对应组件 |
-|------|------|----------|
-| 位置 | 顶部（默认）/ 底部 | `ChapterProgressBar` / `ChapterProgressBarBottom` |
-| 比例 | 横屏 16:9（默认）/ 竖屏 9:16 | `ChapterProgressBar` / `ChapterProgressBarPortrait` |
-
->>>>>>> origin/main
 <img src="previews/chapter-preview.png" alt="Chapter progress bar" width="960" height="32" />
 
 ### 2. Dash
