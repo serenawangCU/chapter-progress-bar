@@ -23,52 +23,82 @@ metadata:
 
 根据 `.srt` 字幕或时间戳，生成视频章节进度条 overlay。v2.0 提供 **6 种风格**（默认米色 Chapter）——可定制位置与比例，也支持 PNG 头像、SVG 吉祥物等品牌素材。
 
-## 第一步：判断输入模式
+## 第一步：向用户确认需求
 
-**模式 A — 用户提供 `.srt` 字幕文件**
+**开工前先向用户确认以下事项。** 建议**一次性列出所有问题**，并在每题后标注默认值。用户回复 **skip / 默认 / 都行** 时，未答项全部采用默认。
 
-读取文件，找出：
-1. 视频总时长（最后一条字幕的结束时间）
-2. 内容结构上的自然段落（话题转换点）
-3. 向用户建议章节划分，**确认后再继续**
+### 确认清单（附默认值）
+
+```
+你好！做进度条前确认几件事——默认选项可直接回复 skip：
+
+① 章节怎么分？
+   · 发 .srt 字幕文件 → 我来分析并建议章节划分，你确认后再做
+   · 或直接给时间戳 + 章节名，例如：
+     0:00 开场
+     2:07 文件夹结构
+   · 还需知道视频总时长
+
+② 哪种风格？（6 选 1）
+   Chapter / Dash / Minimal / Text Highlight / Customize / Crab
+   默认：Chapter（米色分段条 + 章节名）
+
+③ 条放哪里？（Chapter 风格可选）
+   顶部 / 底部
+   默认：顶部
+
+④ 视频比例？
+   横屏 16:9 / 竖屏 9:16
+   默认：横屏 16:9
+
+⑤ 主题色 & 底色？（已播放 / 未播放）
+   默认：#C09070 / #EDE4D4
+   （若选 Crab 风格，默认改为粉色系 #E8738A / #F5C0CC）
+
+回复 skip 即可全部用默认；也可以只改某几项。
+```
+
+### 章节划分（第 ① 项）
+
+**模式 A — 用户提供 `.srt` 字幕**
+
+1. 读取文件，找出视频总时长（最后一条字幕的结束时间）
+2. 分析内容结构，找出自然段落（话题转换点）
+3. 向用户**列出建议的章节划分**，等用户确认后再继续
+4. 不要跳过确认——即使用户给了字幕，也要让用户点头认可章节切分
 
 **模式 B — 用户直接给出时间戳和章节名**
 
-例如：
-```
-0:00 开始
-2:07 文件夹结构
-4:46 自动化输入流
-```
+直接使用，但仍需确认视频总时长与章节列表是否完整。
 
-直接使用，跳过字幕分析，只需额外确认视频总时长。
+时间戳换算：`总秒数 = 分钟 × 60 + 秒`
 
-时间戳换算公式：`总秒数 = 分钟 × 60 + 秒`
+> 用户已在对话里明确给出了部分信息（如风格、比例）时，只追问缺失项，**不要重复询问已知答案**。
 
 ---
 
 ## 第二步：选择进度条风格
 
-**若用户未指定风格，默认使用 Chapter（米色，顶部横屏）。**
-
-向用户展示 **6 种风格**（可用简短描述 + 让用户选编号或名称）：
+若第一步已选定风格，跳过此步。否则向用户展示 **6 种风格**：
 
 | 风格 | 组件 | Composition ID | 说明 |
 |------|------|----------------|------|
-| **Chapter（默认）** | 见第三步布局选项 | 见第三步 | 米色分段条 + 章节名，可定制位置与比例 |
+| **Chapter（默认）** | 见第三步布局表 | 见第三步 | 米色分段条 + 章节名 |
 | Dash | `DashProgressBar` | `DashProgressBar` | 分段破折号 + 下方章节名 |
 | Minimal | `MinimalProgressBar` | `MinimalProgressBar` | 极简单线 + 节点圆点，无文字 |
 | Text Highlight | `TextHighlightProgressBar` | `TextHighlightProgressBar` | 纯文字高亮，`\|` 分隔 |
-| Customize | `KyomiProgressBar` | `KyomiProgressBar` | 米色条 + **用户上传 PNG 头像**沿进度移动 |
-| Crab | `CrabProgressBar` | `CrabProgressBar` | 粉色条 + **内置螃蟹 SVG** 沿进度爬行 |
+| Customize | `KyomiProgressBar` | `KyomiProgressBar` | 米色条 + 用户上传 PNG 头像 |
+| Crab | `CrabProgressBar` | `CrabProgressBar` | 粉色条 + 内置螃蟹 SVG |
 
-> 风格源码均在 [`src/progress-bars/`](./src/progress-bars/)，选定后只修改对应文件，不要混写多种风格到一个组件里。
+> 风格源码均在 [`src/progress-bars/`](./src/progress-bars/)，选定后只修改对应文件。
 
 ---
 
-## 第三步：确认布局与通用参数
+## 第三步：确定组件与章节数据
 
-### Chapter 布局选项（仅 Chapter 风格）
+根据第一步确认的结果，选定组件并写入数据。
+
+### Chapter 布局对照（位置 × 比例 → 组件）
 
 | 位置 | 比例 | 组件 | Composition ID | Root 尺寸 |
 |------|------|------|----------------|-----------|
@@ -76,14 +106,21 @@ metadata:
 | 底部 | 横屏 16:9 | `ChapterProgressBarBottom` | `ChapterProgressBarBottom` | 1920×1080 |
 | 顶部 | 竖屏 9:16 | `ChapterProgressBarPortrait` | `ChapterProgressBarPortrait` | 1080×1920 |
 
-其他 5 种风格（Dash / Minimal / Text Highlight / Customize / Crab）目前为 **顶部横屏 16:9**。
+其他 5 种风格目前为 **顶部横屏 16:9**。
 
-### 通用参数
+### 配色写入
 
-两种输入模式都需要确认：
+将第一步确认的主题色 / 底色写入组件 `COLORS` 对象：
 
-- **配色**：默认米色（`#C09070` / `#EDE4D4`）；Crab 默认粉色；可按风格改 `COLORS` 对象
-- **章节数据结构**：所有组件统一使用
+```tsx
+const COLORS = {
+  filled: "#C09070",    // 主题色（已播放）— 用户指定或默认
+  unfilled: "#EDE4D4",  // 底色（未播放）— 用户指定或默认
+  // ...
+};
+```
+
+### 章节数据结构
 
 ```tsx
 const chapters = [
@@ -294,7 +331,7 @@ npx remotion render <CompositionId> --codec=prores --prores-profile=4444 out/pro
 | 更透明/不透明 | Chapter / Crab / Customize 的 `BAR_OPACITY` |
 | 换配色 | `COLORS` 对象 |
 | 字更大/小 | 各组件的 `fontSize` |
-| 字被竖线挡 / 被裁切 | 缩短 `label`、去掉 `sub`、调 `fontSize`；见第七步可读性检查 |
+| 字被竖线挡 / 被裁切 | 缩短 `label`、去掉 `sub`、调 `fontSize`；见第六步可读性检查 |
 | 章节名/时间改了 | `chapters` 数组 + `TOTAL_DURATION_S` + Root 的 `durationInFrames` |
 | Customize 换头像 | `assets/` 下 PNG + import 路径 |
 | Crab 换吉祥物 | 替换 `MiniCrab` 或改 `COLORS` |
