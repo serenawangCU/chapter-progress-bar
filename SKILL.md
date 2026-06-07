@@ -23,6 +23,11 @@ metadata:
 
 根据 `.srt` 字幕或时间戳，生成视频章节进度条 overlay。v2.0 提供 **6 种风格**（默认米色 Chapter）——可定制位置与比例，也支持 PNG 头像、SVG 吉祥物等品牌素材。
 
+> [!IMPORTANT]
+> **核心原则：不要删除其他风格的 demo 和组件代码。**
+> 这个 skill 的 6 种风格组件都是资产。即使用户这次只用一种风格，也要**保留全部组件文件并在 Root.tsx 注册全部 Composition**，只对选定风格写入真实数据。用户随时可能换风格、对比效果、下次复用。
+> 仅当用户**明确要求**「删掉/精简其他风格」时才移除，且移除前先复述确认。详见第五步、第六步。
+
 ## 第一步：向用户确认需求
 
 **开工前先向用户确认以下事项。** 建议**一次性列出所有问题**，并在每题后标注默认值。用户回复 **skip / 默认 / 都行** 时，未答项全部采用默认。
@@ -180,15 +185,18 @@ cd chapter-progress-bar
 npm install
 ```
 
-从本 skill 仓库复制所需文件到用户项目：
+从本 skill 仓库复制文件到用户项目。**默认整目录复制，保留全部 6 种风格组件**——这样用户随时能换风格、对比 demo：
 
 ```
-src/progress-bars/<SelectedComponent>.tsx   ← 选定风格的组件
-src/progress-bars/assets/                   ← Customize 素材（如需要）
-src/Root.tsx                                ← 参考本仓库，注册 Composition
+src/progress-bars/        ← 整个目录全部组件（不要只挑选定的那一个）
+src/progress-bars/assets/ ← Customize 素材（随目录一起带上）
+src/Root.tsx              ← 参考本仓库，注册全部风格的 Composition
 ```
 
-若用户项目尚无 `progress-bars` 目录，创建 `src/progress-bars/` 并放入组件。
+若用户项目尚无 `progress-bars` 目录，创建 `src/progress-bars/` 并放入**全部**组件。
+
+> [!IMPORTANT]
+> **不要只复制选定风格那一个组件、删掉其余。** demo 组件是这个 skill 的资产，全部带上几乎没有成本（都是纯前端组件），但能让用户随时切换、对比。仅当用户明确要求精简时才删。
 
 ---
 
@@ -204,7 +212,13 @@ src/Root.tsx                                ← 参考本仓库，注册 Composi
 
 ### `src/Root.tsx`
 
-只注册用户选定的那一个 Composition（除非用户明确要求保留多种风格对比预览）。
+> [!IMPORTANT]
+> **禁止删除其他风格的 Composition 注册和组件代码。**
+> 默认要**保留全部 6 种风格的 demo**——它们是这个 skill 的核心资产，用户随时可能换风格、对比效果，或下次复用。
+> 正确做法：在 Root.tsx 里**新增或更新**用户选定风格的 Composition（写入真实数据、改 `durationInFrames`、按比例改 `width`/`height`），**其余 Composition 原样留着**，组件文件一个都不要删。
+> 只有当用户**明确说出**「删掉其他风格 / 只保留这一个 / 精简掉 demo」时，才可以移除——而且要先复述一遍确认。
+
+下面是只含一个 Composition 的最小示例（用于全新空项目）；**若项目里已注册了多种风格，照上面的规则在其基础上增改，不要替换成这个最小版本。**
 
 **16:9 横屏**（默认）：
 ```tsx
