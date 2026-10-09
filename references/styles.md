@@ -1,94 +1,46 @@
-# 进度条风格对照表 · v2.0
+# 章节进度条风格参考 · v3.0
 
-## 6 种风格一览
+所有风格均使用 HyperFrames HTML 实现。`previews/` 里的图片只作为视觉参考；不要从旧 TSX 组件启动 Remotion 项目。
 
-| # | 风格名 | 文件 | Composition ID | 需要素材 |
-|---|--------|------|----------------|----------|
-| 1 | **Chapter（默认）** | 见下方布局表 | 见下方布局表 | 无 |
-| 2 | Dash | `DashProgressBar.tsx` | `DashProgressBar` | 无 |
-| 3 | Minimal | `MinimalProgressBar.tsx` | `MinimalProgressBar` | 无 |
-| 4 | Text Highlight | `TextHighlightProgressBar.tsx` | `TextHighlightProgressBar` | 无 |
-| 5 | Customize | `KyomiProgressBar.tsx` | `KyomiProgressBar` | **用户 PNG** |
-| 6 | Crab | `CrabProgressBar.tsx` | `CrabProgressBar` | 内置 SVG（可替换） |
+## 六种风格
 
-预览图见 [`previews/`](../previews/)（均截取于 **3:00** 时刻，默认顶部横屏）。
+| 风格 | 视觉特征 | 默认高度 | 备注 |
+|---|---|---:|---|
+| Chapter（默认） | 米色分段条、章节名、线性填充 | 62px + 10px 阴影 | 最适合 5–8 章 |
+| Dash | 分段短线、下方章节名 | 120px | 标题较多时注意纵向空间 |
+| Minimal | 6px 细线、章节节点圆点 | 40–80px | 无文字，最轻量 |
+| Text Highlight | 章节名与 `|` 分隔，高亮当前进度 | 80px | 适合短标题 |
+| Customize | Chapter + 用户透明 PNG 头像 | 62px | 头像不能遮挡标题 |
+| Crab | 粉色进度条 + 螃蟹 SVG | 60px | 吉祥物沿进度移动 |
 
----
+## 默认 Chapter 配色
 
-## 位置 & 比例（全部 6 种风格均适用）
-
-| 选项 | 默认 |
-|------|------|
-| 位置 | 顶部 |
-| 比例 | 横屏 16:9 |
-
-### Chapter — 现成布局组件
-
-| 位置 | 比例 | 文件 | Composition ID | Root 尺寸 |
-|------|------|------|----------------|-----------|
-| 顶部（默认） | 横屏 16:9 | `ChapterProgressBar.tsx` | `ChapterProgressBar` | 1920×1080 |
-| 底部 | 横屏 16:9 | `ChapterProgressBarBottom.tsx` | `ChapterProgressBarBottom` | 1920×1080 |
-| 顶部 | 竖屏 9:16 | `ChapterProgressBarPortrait.tsx` | `ChapterProgressBarPortrait` | 1080×1920 |
-
-### 其他 5 种风格 — 参考 Chapter 改法
-
-仓库未预置底部/竖屏变体，但**全部风格都支持**自定义位置与比例：
-
-| 需求 | 参考文件 | 改什么 |
-|------|----------|--------|
-| 竖屏 9:16 | `ChapterProgressBarPortrait.tsx` | Root `1080×1920`；窄格自适应字号 |
-| 条放底部 | `ChapterProgressBarBottom.tsx` | 容器 `bottom: 0`；阴影方向翻转 |
-| 底部 + 竖屏 | 以上两个 | 同时应用 |
-
----
-
-## 风格说明
-
-### Chapter（默认米色）
-
-- 分段填充 + 章节名，支持 `label` + `sub` 两行
-- 默认色：`filled #C09070` · `unfilled #EDE4D4`
-
-### Dash
-
-- 每段上方一条圆角破折号，下方章节名
-- 文字颜色随播放进度变化
-
-### Minimal
-
-- 单条 6px 细线 + 章节节点圆点，无章节文字
-
-### Text Highlight
-
-- 无实体条，仅章节名 + `|` 分隔符
-
-### Customize
-
-- 米色分段条 + 用户 PNG 头像沿填充边缘移动
-
-### Crab
-
-- 粉色分段条 + 内置 `MiniCrab` SVG 沿进度爬行
-
----
-
-## 章节数据格式（所有风格通用）
-
-```tsx
-const TOTAL_DURATION_S = 945;
-
-const chapters = [
-  { label: "开场",     sub: "",       startS: 0,   endS: 70  },
-  { label: "Demo 1",  sub: "截图复刻", startS: 70,  endS: 102 },
-  // ...
-];
+```css
+--filled: rgba(192, 144, 112, 0.94);
+--unfilled: rgba(237, 228, 212, 0.92);
+--text: #493120;
+--divider: rgba(150, 125, 96, 0.64);
 ```
 
----
+## 布局
 
-## 渲染命令
+| 位置 | 横屏 | 竖屏 |
+|---|---|---|
+| 顶部 | 1920×1080，`top: 0` | 1080×1920，`top: 0` |
+| 底部 | 1920×1080，`bottom: 0` | 1080×1920，`bottom: 0` |
 
-```bash
-npx remotion render <CompositionId> --codec=vp8 out/progress-bar.webm
-npx remotion render <CompositionId> --codec=prores --prores-profile=4444 out/progress-bar.mov
-```
+Overlay 始终保留完整目标画布尺寸和透明背景。只有在 HEVC Alpha 不被目标软件支持、需要裁切 ProRes 回退时，
+才把画布裁到进度条实际高度，并提示用户手动对齐位置。
+
+## 文字适配
+
+- 先按章节时长分配格宽，再决定字号。
+- 最短格可以单独设置更小字号。
+- 允许使用 `white-space: nowrap; overflow: hidden`，但交付前必须截图核查。
+- 短格优先使用 `1.`、`2.`、`3.` 等紧凑标题，不使用 `Demo 1 / Demo 2` 的冗长前缀。
+
+## 动画
+
+- 普通线性进度：`scaleX(0 → 1)`，`ease: none`，总时长与视频一致。
+- Customize / Crab：角色位置与同一线性进度绑定。
+- 所有动画必须可 seek；不要依赖 `requestAnimationFrame`、真实时钟或不可重复随机数。
